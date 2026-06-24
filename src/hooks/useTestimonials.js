@@ -1,48 +1,44 @@
 import { useState, useEffect } from 'react'
+import {
+  collection, addDoc, updateDoc, deleteDoc,
+  doc, query, orderBy, onSnapshot, serverTimestamp,
+} from 'firebase/firestore'
+import { db } from '../firebase'
 
-const STORAGE_KEY = 'owen_blackorby_testimonials'
+const COL = 'testimonials'
 
 export function useTestimonials() {
-  const [testimonials, setTestimonials] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      return stored ? JSON.parse(stored) : []
-    } catch {
-      return []
-    }
-  })
+  const [testimonials, setTestimonials] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(testimonials))
-  }, [testimonials])
+    const q = query(collection(db, COL), orderBy('createdAt', 'desc'))
+    const unsub = onSnapshot(q, (snapshot) => {
+      setTestimonials(snapshot.docs.map(d => ({ id: d.id, ...d.data() })))
+      setLoading(false)
+    })
+    return unsub
+  }, [])
 
-  const addTestimonial = (data) => {
-    const entry = {
-      id: Date.now(),
+  const addTestimonial = (data) =>
+    addDoc(collection(db, COL), {
       name: data.name,
       email: data.email || '',
       rating: data.rating,
       message: data.message,
       propertyType: data.propertyType || '',
       approved: false,
-      createdAt: new Date().toISOString(),
-    }
-    setTestimonials(prev => [entry, ...prev])
-    return entry
-  }
+      createdAt: serverTimestamp(),
+    })
 
-  const approveTestimonial = (id) => {
-    setTestimonials(prev =>
-      prev.map(t => t.id === id ? { ...t, approved: true } : t)
-    )
-  }
+  const approveTestimonial = (id) =>
+    updateDoc(doc(db, COL, id), { approved: true })
 
-  const deleteTestimonial = (id) => {
-    setTestimonials(prev => prev.filter(t => t.id !== id))
-  }
+  const deleteTestimonial = (id) =>
+    deleteDoc(doc(db, COL, id))
 
   const approvedTestimonials = testimonials.filter(t => t.approved)
-  const pendingTestimonials = testimonials.filter(t => !t.approved)
+  const pendingTestimonials  = testimonials.filter(t => !t.approved)
 
   return {
     testimonials,
@@ -51,5 +47,6 @@ export function useTestimonials() {
     addTestimonial,
     approveTestimonial,
     deleteTestimonial,
+    loading,
   }
 }

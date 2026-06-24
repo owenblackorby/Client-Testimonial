@@ -29,7 +29,7 @@ export default function TestimonialForm({ onSubmit }) {
     return errs
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) {
@@ -37,14 +37,17 @@ export default function TestimonialForm({ onSubmit }) {
       return
     }
     setLoading(true)
-    setTimeout(() => {
-      onSubmit(form)
+    try {
+      await onSubmit(form)
       setForm(INITIAL)
       setErrors({})
       setSubmitted(true)
-      setLoading(false)
       setTimeout(() => setSubmitted(false), 6000)
-    }, 400)
+    } catch (err) {
+      console.error('Submission failed:', err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

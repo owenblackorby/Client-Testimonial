@@ -5,7 +5,7 @@ import TestimonialCard from '../components/TestimonialCard'
 import { useTestimonials } from '../hooks/useTestimonials'
 
 export default function Home() {
-  const { approvedTestimonials, addTestimonial } = useTestimonials()
+  const { approvedTestimonials, addTestimonial, loading } = useTestimonials()
   const formRef = useRef(null)
 
   useEffect(() => {
@@ -99,7 +99,11 @@ export default function Home() {
             <p>Testimonials from buyers and sellers across Central Illinois.</p>
           </div>
 
-          {approvedTestimonials.length === 0 ? (
+          {loading ? (
+            <div className="empty-state">
+              <p style={{ color: 'var(--gray)' }}>Loading reviews…</p>
+            </div>
+          ) : approvedTestimonials.length === 0 ? (
             <div className="empty-state">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>

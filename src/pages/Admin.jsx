@@ -8,12 +8,10 @@ const ADMIN_PASSWORD = 'jimmaloof'
 
 const SESSION_KEY = 'owen_admin_session'
 
-function formatDate(iso) {
-  return new Date(iso).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
+function formatDate(ts) {
+  if (!ts) return ''
+  const date = ts?.toDate ? ts.toDate() : new Date(ts)
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 function initials(name) {

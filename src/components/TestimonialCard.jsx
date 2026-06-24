@@ -6,12 +6,10 @@ const BADGE_CLASS = {
   Both: 'badge-both',
 }
 
-function formatDate(iso) {
-  return new Date(iso).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
+function formatDate(ts) {
+  if (!ts) return ''
+  const date = ts?.toDate ? ts.toDate() : new Date(ts)
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
 }
 
 function initials(name) {
