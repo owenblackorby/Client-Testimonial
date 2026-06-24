@@ -59,7 +59,7 @@ export default function Admin() {
           </Link>
         </div>
         <div className="admin-login">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1B2A4A" strokeWidth="1.5" style={{margin: '0 auto 16px'}}>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1E4D35" strokeWidth="1.5" style={{margin: '0 auto 16px'}}>
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
           </svg>
@@ -121,7 +121,7 @@ export default function Admin() {
             <div className="label">Total</div>
           </div>
           <div className="admin-stat-card">
-            <div className="number" style={{color: '#b37f00'}}>{pending.length}</div>
+            <div className="number" style={{color: '#b86c00'}}>{pending.length}</div>
             <div className="label">Pending</div>
           </div>
           <div className="admin-stat-card">
