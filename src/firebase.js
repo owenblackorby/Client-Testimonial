@@ -4,12 +4,13 @@ import { getFirestore } from 'firebase/firestore'
 // Go to console.firebase.google.com → your project → Project Settings → Your apps
 // Copy the firebaseConfig object and paste the values below
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId:             "YOUR_APP_ID",
+  apiKey:            "AIzaSyBGZFXlTbqvLE7OkltZwJl0n5rVl-FnXzk",
+  authDomain:        "owen-testimonials.firebaseapp.com",
+  projectId:         "owen-testimonials",
+  storageBucket:     "owen-testimonials.firebasestorage.app",
+  messagingSenderId: "407592249661",
+  appId:             "1:407592249661:web:e54fd2f6885074b9067d54",
+  measurementId:     "G-V4Y6W9KT8Z",
 }
 
 const app = initializeApp(firebaseConfig)
